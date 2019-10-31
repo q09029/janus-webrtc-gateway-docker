@@ -113,6 +113,17 @@ RUN cd / && git clone https://github.com/q09029/janus-gateway.git && cd /janus-g
      --disable-websockets --disable-rabbitmq --disable-mqtt &&\
     make && make install && make configs && ldconfig
 
+RUN apt-get -y update && apt-get install -y openssl
+
+RUN mkdir /etc/nginx/ssl
+
+COPY ssl/nginx.key /etc/nginx/ssl/
+COPY ssl/nginx.pem /etc/nginx/ssl/
+
+RUN chown root:root -R /etc/nginx/ssl/
+RUN chmod 600 /etc/nginx/ssl/*
+RUN chmod 700 /etc/nginx/ssl
+
 COPY nginx.conf /etc/nginx/nginx.conf
 
 CMD nginx && janus
