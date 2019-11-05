@@ -24,8 +24,14 @@ build-jetson-push:
 bash:
 	@docker run --rm --net=host --name="janus" -it -t q09029/$(TEMPLATE_NAME) /bin/bash
 
+bash-camera:
+	@docker run --rm --net=host --name="janus" --device /dev/video0:/dev/video0:mwr -it -t q09029/$(TEMPLATE_NAME) /bin/bash
+
 run:
 	@docker run --rm --net=host --name="janus" -it -t q09029/$(TEMPLATE_NAME)
+
+run-camera:
+	@docker run --rm --net=host --name="janus" --device /dev/video0:/dev/video0:mwr -it -t q09029/$(TEMPLATE_NAME)
 
 run-mac:
 	@docker run --rm -p 80:80 -p 8088:8088 -p 8188:8188 --name="janus" -it -t q09029/$(TEMPLATE_NAME)
